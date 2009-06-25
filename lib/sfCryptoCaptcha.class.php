@@ -177,7 +177,7 @@ class sfCryptoCaptcha
     //destroy the temporary image
     imagedestroy ($this->temp_image); 
     
-    //select a background image (the one specified or one random in the file) or set background color
+    //select a background image (from the file) or set background color
     $this->selectBackground();
     
     //create the image (starting by the background)
@@ -566,13 +566,16 @@ class sfCryptoCaptcha
         }
       }
       closedir($pointer);
-      $this->captcha['bg_img'] = $this->config['bg_img'].'/'.$files[array_rand($files, 1)];
+      $this->config['bg_img'] = $this->config['bg_img'].'/'.$files[array_rand($files, 1)];
+    }
+    elseif($this->config['bg_img'] && file_exists($this->config['bg_img']))
+    {
+      //use the file specified
     }
     else
     {
       $this->captcha['bg_img'] = '';
     }
-    
     $this->captcha['bg_colors'] = array('red'=>$this->config['bg_red'], 'green'=>$this->config['bg_green'], 'blue'=>$this->config['bg_blue']);
     
     if(!empty($this->captcha['bg_colors']))
@@ -674,7 +677,6 @@ class sfCryptoCaptcha
   private function createCaptchaImageAndBackground()
   {
     $this->image = imagecreatetruecolor($this->config['width'],$this->config['height']);
-    
     //add background
     if(!empty($this->config['bg_img']))
     {
@@ -1133,7 +1135,8 @@ class sfCryptoCaptcha
     $this->config['bg_green'] = sfConfig::get('app_sf_crypto_captcha_bg_green', 255); // quantity of green (0->255)
     $this->config['bg_blue'] = sfConfig::get('app_sf_crypto_captcha_bg_blue', 255); // quantity of blue (0->255)
     $this->config['bg_transparent'] = sfConfig::get('app_sf_crypto_captcha_bg_transparent', false); // transparent backround, only for PNG
-    $this->config['bg_img'] = sfConfig::get('app_sf_crypto_captcha_bg_img', ''); // image or file (randomly chosen in the file)
+    $this->config['bg_img'] = sfConfig::get('app_sf_crypto_captcha_bg_img', false); // image or file where the background is chosen (randomly chosen in the file)
+    if($this->config['bg_img'] != false) { $this->config['bg_img'] = $web_dir.$this->config['bg_img']; }
     $this->config['bg_border'] = sfConfig::get('app_sf_crypto_captcha_bg_border', true); //border or not
     
     $this->config['img_dir'] = sfConfig::get('app_sf_crypto_captcha_img_dir', '/sfCryptoCaptchaPlugin/images/'); // directory of images

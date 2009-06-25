@@ -26,7 +26,7 @@ If this doesn't work, try the help option for plugin installation
 
     $ mkdir plugins/sfCryptoCaptchaPlugin
     $ cd plugins/sfCryptoCaptchaPlugin
-    plugins/sfCryptoCaptchaPlugin$ svn co http://svn.symfony-project.com/plugins/sfCryptoCaptchaPlugin .
+    plugins/sfCryptoCaptchaPlugin$ svn co http://svn.symfony-project.com/plugins/sfCryptoCaptchaPlugin/trunk .
     $ cd ../..
 
 Activate the plugin in you applications `settings.yml` file:
@@ -66,12 +66,14 @@ Some precisions thought:
 Two helper functions are to be used in your template 
 
     [php]
+    <?php
     // in the head of your template, call the helper
     use_helper('sfCryptoCaptcha');
     
     //the helper functions
     captcha_image();
     captcha_reload_button();
+    ?>
     
     // in a table form it looks like this
     <tr>
@@ -94,6 +96,7 @@ The first helper displays the captcha image, the second one is the reload button
 To validate the entered captcha code in a form, use the sfValidatorSfCryptoCaptcha validator like so:
 
     [php]
+    <?php
     //this is in your somePurposeForm.class.php file
     $this->setWidgets(array(
            // .. other fields ..
@@ -107,9 +110,9 @@ To validate the entered captcha code in a form, use the sfValidatorSfCryptoCaptc
     ));
     $this->setValidators(array(
            // .. other fields ..
-           'captcha' => new sfValidatorSeCaptcha(array('required' => true, 'trim' => true),
-                                                 array('wrong_captcha' => 'The code you copied is not valid.',
-                                                 'required' => 'You did not copy any code. Please copy the code.')),
+           'captcha' => new sfValidatorSfCryptoCaptcha(array('required' => true, 'trim' => true),
+                                                       array('wrong_captcha' => 'The code you copied is not valid.',
+                                                             'required' => 'You did not copy any code. Please copy the code.')),
            // .. other fields ..
     ));
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
@@ -128,8 +131,10 @@ There are no dependecies other than PHP >= 5.0.0
 
 These are the things that need to be implemented/fixed:
 
+ * The pear install seems to malfunction :(
  * The fonts directory is under the web directory so if you know the font name, you can download it (not very good)
  * The functionality to reuse a captcha (by saving it in clear in the user session) has been removed from the original library, it could be nice to code it back in and add an option to activate that feature - still, this is a less secure method than making a new captcha everytime.
+ * The display of the error messages "refreshing too fast" is not localized and is cut if the catpcha is too small.
 
 ## Troubleshooting
 
@@ -148,7 +153,12 @@ If there is no image or no refresh button, check the following:
     * the final paths are correct (/captcha for the image and /sfCryptoCaptchaPlugin/images/refresh.png for the refresh image)
     * there is no conflict in the url (/captcha not used by some other plugin or module of the same name)
     * there is no special :format applied in the URL (the helper does not (yet) handle extensions/formats[like .html, .php etc.])
-  * after checking all this, if it still doesn't work, you'll have to check everything directly in the source of the plugin. If you notice a glitch or a bug, please contact-me[henearkrxern [at] hotmail.fr] and I'll update the script. Thanks :)
+  * after checking all this, if it still doesn't work, you'll have to check everything directly in the source of the plugin. If you notice a glitch or a bug, please contact-me [henearkrxern [at] hotmail.fr] and I'll update the script. Thanks :)
+
+If your captcha does not display correctly:
+
+  * If all the characters are not in the image, play with the character size settings(char_min_size and char_max_size) and the character spacing (char_px_spacing) and/or with the image size.
+  * Play with some options and see what you come up with, hopefully, you should find where the problem is coming from.
 
 ## Copyright
 

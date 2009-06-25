@@ -3,7 +3,7 @@
  * sfCryptoCaptcha Config file (mainly for routing)
  *
  * @package    sfCryptoCaptchaPlugin
- * @subpackage form
+ * @subpackage config
  * @author     HeNeArKrXeRn <henearkrxern [at] hotmail.fr>
  */
 

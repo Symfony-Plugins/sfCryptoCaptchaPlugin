@@ -10,11 +10,11 @@
   <email>henearkrxern@hotmail.fr</email>
   <active>yes</active>
  </lead>
- <date>2009-04-07</date>
- <time>00:03:47</time>
+ <date>2009-06-25</date>
+ <time>18:50:08</time>
  <version>
-  <release>0.0.3</release>
-  <api>0.0.3</api>
+  <release>0.0.4</release>
+  <api>0.0.4</api>
  </version>
  <stability>
   <release>beta</release>
@@ -62,6 +62,9 @@
     </dir>
     <dir name="images">
      <file role="data" name="reload.png" />
+     <dir name="bg">
+       <file role="data" name="clear.gif" />
+     </dir>
     </dir>
    </dir>
   </dir>
@@ -85,19 +88,35 @@
  <phprelease />
  <changelog>
   <release>
+   <version>
+    <release>0.0.4</release>
+    <api>0.0.4</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.symfony-project.com/license">MIT license</license>
+   <license>MIT</license>
+   <date>2009-06-25</date>
+   <notes>
+     * henearkrxern: problem with background image - FIXED and some details in README and package
+   </notes>
+  </release>
+  <release>
     <version>
-      <release>0.0.1</release>
-      <api>0.0.1</api>
+      <release>0.0.3</release>
+      <api>0.0.3</api>
     </version>
     <stability>
      <release>beta</release>
      <api>beta</api>
     </stability>
     <license uri="http://www.symfony-project.org/license">MIT license</license>
-    <date>2009-04-06</date>
+    <date>2009-04-07</date>
     <license>MIT</license>
     <notes>
-      * henearkrxern: First version, no known bugs (somewhat stable) but there are improvements to be done (see README)
+      * henearkrxern: there were some errors in the README (fixed)
     </notes>
   </release>
   <release>
@@ -118,18 +137,18 @@
   </release>
   <release>
     <version>
-      <release>0.0.3</release>
-      <api>0.0.3</api>
+      <release>0.0.1</release>
+      <api>0.0.1</api>
     </version>
     <stability>
      <release>beta</release>
      <api>beta</api>
     </stability>
     <license uri="http://www.symfony-project.org/license">MIT license</license>
-    <date>2009-04-07</date>
+    <date>2009-04-06</date>
     <license>MIT</license>
     <notes>
-      * henearkrxern: there were some errors in the README (fixed)
+      * henearkrxern: First version, no known bugs (somewhat stable) but there are improvements to be done (see README)
     </notes>
   </release>
 </changelog>

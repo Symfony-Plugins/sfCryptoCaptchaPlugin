@@ -17,7 +17,7 @@ class sfValidatorSfCryptoCaptcha extends sfValidatorBase
     $this->setOption('trim', true);
     $this->setOption('required', true);
 
-    $this->addMessage('wrong_captcha', 'Captcha code wrong.');
+    $this->addMessage('wrong_captcha', 'Wrong captcha code.');
   }
   /**
    * @see sfValidatorBase
