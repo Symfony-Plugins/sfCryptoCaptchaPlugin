@@ -9,10 +9,8 @@ all:
     bg_green:                         255                 #quantity of green color (0->255)
     bg_blue:                          255                 #quantity of blue color (0->255)
     bg_transparent:                   false               #transparent background - only works for PNG images
-    bg_img:                           false               # image or file (randomly choses an image in the file) [can be false, image or file path]
+    bg_img:                           false               # boolean or image or file (randomly choses an image in the file) [path from sf root]
     bg_border:                        true                #add a border or not
-  #Paths
-    img_dir:                          '/sfCryptoCaptchaPlugin/images' #directory of the images in the web directory
   #Characters
     char_red:                         0                   # quantity of red color  (0->255)
     char_green:                       0                   # quantity of green color  (0->255)
@@ -26,8 +24,8 @@ all:
     char_max_rot_angle:               30                  # maximum character rotation angle (0->360)
     char_vertical_offset:             true                # add a random vertical offset to letters
   #Fonts
-    char_fonts:                       [luggerbu.ttf,SCRAWL.ttf,Alanden_.ttf]  # the randomly used fonts to generate the characters
-    char_fonts_dir:                   '/sfCryptoCaptchaPlugin/fonts/' #directory containing the fonts in the web directory
+    char_fonts:                       [luggerbu.ttf,SCRAWL.ttf,Alanden_.ttf] # the randomly used fonts to generate the characters
+    char_fonts_dir:                   '/plugins/sfCryptoCaptchaPlugin/media/fonts/' # directory containing the fonts in the symfony root directory
     error_font:                       'arial.ttf'         # font used for error messages
   #Authorized characters
     chars_used:                       'ABCDEFGHKLMNPRTWXYZ234569'  # characters used for random captchas without "easy" option
@@ -57,3 +55,8 @@ all:
     noise_max_circles:                3                   # maximum noise circles
     noise_color:                      3                   # noise color to use (1=character color, 2= background color, 3= random color)
     noise_on_top:                     false               # if noise is the top layer (above the caracters)
+  #Refresh
+    refresh_image:                    '/sfCryptoCaptchaPlugin/images/reload_original.png'  # use an other captcha reload image - must be in the web directory
+    error_images_dir:                 '/plugins/sfCryptoCaptchaPlugin/media/error/' # the path to the directory where the error images are - from the symfony root dir
+    
+    

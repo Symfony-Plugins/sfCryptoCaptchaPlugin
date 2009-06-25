@@ -58,14 +58,17 @@ class sfCryptoCaptcha
           $this->config['constructor_test'] = false;
           if(!$this->testQueries()) { 
             $this->config['constructor_error_reason'] = 'Error - too many queries';
+            $this->config['constructor_error_message'] = 'too_many';
           }
           elseif(!$this->testLastRequest())
           {
             $this->config['constructor_error_reason'] = 'Error - refreshing too fast';
+            $this->config['constructor_error_message'] = 'refresh';
           }
           else
           {
             $this->config['constructor_error_reason'] = 'Error - unknown reason';
+            $this->config['constructor_error_message'] = 'unknown';
           }
           return false;
         }
@@ -148,14 +151,25 @@ class sfCryptoCaptcha
   {
     if($this->config['constructor_test']===false) {
       //generate error image
-      if(!$this->generateErrorImage($this->config['constructor_error_reason']))
+      if(!$this->sendErrorImage($this->config['constructor_error_message']))
       {
         if (sfConfig::get('sf_logging_enabled'))
         {
-          $message = '{seCaptcha}';
+          $message = '{sfCaptcha}';
+          $message .= ' - Critical Image Error - ';
+          $message .= 'The ERROR message(['.$this->config['constructor_error_reason'].']) image could not be sent to the user.';
+          $message .= ' Possible problem with file access/path.';
+          sfContext::getInstance()->getLogger()->crit($message);
+        } 
+      }
+      elseif(!$this->generateErrorImage($this->config['constructor_error_reason']))
+      {
+        if (sfConfig::get('sf_logging_enabled'))
+        {
+          $message = '{sfCaptcha}';
           $message .= ' - Critical Image Error - ';
           $message .= 'The ERROR message(['.$this->config['constructor_error_reason'].']) image encoutered an error when sending to user.';
-          $message .= ' Possbile problem with GD2 library.';
+          $message .= ' Possible problem with GD2 library.';
           sfContext::getInstance()->getLogger()->crit($message);
         } 
       }
@@ -701,15 +715,15 @@ class sfCryptoCaptcha
     list($bg_width, $bg_height, $bg_type, $bg_attributes) = getimagesize($this->captcha['bg_img']);
     if($bg_type == '1')
     {
-      $img_read = imagecreatefromgif($this->config['bg_img']);
+      $img_read = imagecreatefromgif($this->captcha['bg_img']);
     }
     elseif($bg_type == '2')
     {
-      $img_read = imagecreatefromjpeg($this->config['bg_img']);
+      $img_read = imagecreatefromjpeg($this->captcha['bg_img']);
     }
     elseif($bg_type == '3')
     {
-      $img_read = imagecreatefrompng($this->config['bg_img']);
+      $img_read = imagecreatefrompng($this->captcha['bg_img']);
     }
     else
     {
@@ -1116,6 +1130,49 @@ class sfCryptoCaptcha
     return $this->sendImageToBrowser();
   }
   
+  private function sendErrorImage($error_message)
+  {
+    // 1) read the image depending on the sf_user culture
+    // 2) send it to the browser
+    
+    //get culture
+    $culture = $this->sf_user->getCulture();
+       
+    //set image path
+    if($this->config['use_i18n'] == true)
+    {
+      $image_path = $this->config['error_images_dir'].DIRECTORY_SEPARATOR.$culture.DIRECTORY_SEPARATOR.$error_message.'.'.$this->config['format'];
+    }
+    else
+    {
+      $image_path = $this->config['error_images_dir'].DIRECTORY_SEPARATOR.$error_message.'.'.$this->config['format'];
+    }
+    //send the finished image in JPG, GIF or PNG format
+    if(strtoupper($this->config['format']) == 'JPG' || strtoupper($this->config['format']) == 'JPEG')
+    {
+      header("Content-type: image/jpeg");
+      readfile($image_path); 
+      exit;
+    }
+    
+    if(strtoupper($this->config['format']) == 'GIF')
+    {
+      header("Content-type: image/gif");
+      readfile($image_path);
+      exit;
+    }
+    
+    if(strtoupper($this->config['format']) == 'PNG')
+    {
+      header("Content-type: image/png");
+      readfile($image_path);
+      exit;
+    }
+    
+    return true;
+  }
+  
+  
   /**
    * Captcha configuration getter from the app.yml
    *
@@ -1126,6 +1183,7 @@ class sfCryptoCaptcha
    */
   private function getConfiguration()
   {
+    $root_dir = sfConfig::get('sf_root_dir');
     $web_dir = sfConfig::get('sf_web_dir');
     //Setting image size
     $this->config['width'] =  sfConfig::get('app_sf_crypto_captcha_width', 130); // width of generated image
@@ -1136,14 +1194,10 @@ class sfCryptoCaptcha
     $this->config['bg_green'] = sfConfig::get('app_sf_crypto_captcha_bg_green', 255); // quantity of green (0->255)
     $this->config['bg_blue'] = sfConfig::get('app_sf_crypto_captcha_bg_blue', 255); // quantity of blue (0->255)
     $this->config['bg_transparent'] = sfConfig::get('app_sf_crypto_captcha_bg_transparent', false); // transparent backround, only for PNG
-    $this->config['bg_img'] = sfConfig::get('app_sf_crypto_captcha_bg_img', false); // boolean or image or file path. 
-      //If a file path is specified, an image is randomly chosen in the file
-    if($this->config['bg_img'] != false) { $this->config['bg_img'] = $web_dir.$this->config['bg_img']; }
+    $this->config['bg_img'] = sfConfig::get('app_sf_crypto_captcha_bg_img', false); // boolean(false) or image(path) or file (random image from file path)
+    if($this->config['bg_img'] != false) { $this->config['bg_img'] = $root_dir.$this->config['bg_img']; } //The background image file must be a path from the symfony root dir
     
     $this->config['bg_border'] = sfConfig::get('app_sf_crypto_captcha_bg_border', true); //border or not
-    
-    $this->config['img_dir'] = sfConfig::get('app_sf_crypto_captcha_img_dir', '/sfCryptoCaptchaPlugin/images/'); // directory of images
-    $this->config['img_dir'] = $web_dir.$this->config['img_dir'];
     
     //Setting characters
     $this->config['char_red'] = sfConfig::get('app_sf_crypto_captcha_char_red', 0); // quantity of ref (0->255)
@@ -1160,8 +1214,8 @@ class sfCryptoCaptcha
     
     //Setting fonts
     $this->config['char_fonts'] = sfConfig::get('app_sf_crypto_captcha_char_fonts', array('luggerbu.ttf')); // the fonts used randomly to generate the characters
-    $this->config['char_fonts_dir'] = sfConfig::get('app_sf_crypto_captcha_char_fonts_dir', '/sfCryptoCaptchaPlugin/fonts/'); // directory with the fonts
-    $this->config['char_fonts_dir'] = $web_dir.$this->config['char_fonts_dir'];
+    $this->config['char_fonts_dir'] = sfConfig::get('app_sf_crypto_captcha_char_fonts_dir', '/plugins/sfCryptoCaptchaPlugin/media/fonts/'); // directory with the fonts
+    $this->config['char_fonts_dir'] = $root_dir.$this->config['char_fonts_dir'];
     $this->config['error_font'] = sfConfig::get('app_sf_crypto_captcha_error_font', 'arial.ttf');
     
     
@@ -1198,6 +1252,11 @@ class sfCryptoCaptcha
     $this->config['noise_max_circles'] = sfConfig::get('app_sf_crypto_captcha_noise_max_circles', 3); // maximum noise circles
     $this->config['noise_color'] = sfConfig::get('app_sf_crypto_captcha_noise_color', 3); // noise color (1= character color, 2= background, 3= random)
     $this->config['noise_on_top'] = sfConfig::get('app_sf_crypto_captcha_noise_on_top', false); // the noise is on the top layer
+    
+    //error config
+    $this->config['use_i18n'] = sfConfig::get('sf_i18n', false);
+    $this->config['error_images_dir'] = sfConfig::get('app_sf_crypto_captcha_error_images_dir', '/plugins/sfCryptoCaptchaPlugin/media/error/'); //the dir where the images are - from symfony root dir
+    $this->config['error_images_dir'] = $root_dir.$this->config['error_images_dir'];
     
     return true;
   }

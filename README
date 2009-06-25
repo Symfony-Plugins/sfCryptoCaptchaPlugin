@@ -118,6 +118,47 @@ To validate the entered captcha code in a form, use the sfValidatorSfCryptoCaptc
     ));
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
+## Configuration details
+
+Here are some useful configuration details
+
+The bg_img options can have many values:
+
+ 1. it can be a boolean (disable background image) 
+ 2. it can be a image name (path from the symfony root) 
+ 3. or it can be a file name (an image will be randomly chosen in the file)
+
+Here's how it looks in the configuration app.yml file
+
+    [yaml]
+    ---
+    bg_img:         false                                                  #1
+    bg_img:         '/plugins/sfCryptoCaptchaPlugin/media/bg/leaf_bg.png'  #2
+    bg_img:         '/plugins/sfCryptoCaptchaPlugin/media/bg'              #3
+
+When setting the letters for the captcha, be careful to exclude characters that look alike,
+for example: `o` and `0` or `B` and `8` (when there is noise and funky fonts, there symbols quickly look alike).
+
+``You want to make it difficult for robots but not for your users.``
+
+For configurations needing paths (backgrounds, refresh button, fonts)
+
+  * Be careful, the path to the refresh image must be from the __web__ root and not the symfony root dir.
+  * On the contrary, the path to the background images and the fonts is relative to the symfony root and the options need to start by a '/'
+
+The error messages are internationalized if the i18n is turned on for symfony.
+The images displayed will be in the `/plugins/sfCryptoCaptchaPlugin/media/error/%SF_CULTURE%/...`
+directory and the extension used will be the same as the configured `format`. If there is no i18n
+active, the three images will be taken from the `/plugins/sfCryptoCaptchaPlugin/media/error/` directory.
+
+The three needed images are:
+
+  * `unknown.xxx`   For unknown errors
+  * `too_many.xxx`  For too many requests per session (maximum 1000 requests per session)
+  * `refresh.xxx`   For too fast refreshes
+
+Each one of there images __must__ be present in each culture folder or in the main error folder.
+By default, a french and english version is provided. You can add as many languages and needed and customize the error images in any graphic editor(Gimp, Photoshop ...) as long as it is in jpeg, png or gif format.
 
 ## Dependencies
 
@@ -133,9 +174,7 @@ There are no dependecies other than PHP >= 5.0.0
 These are the things that need to be implemented/fixed:
 
  * The pear install seems to malfunction :(
- * The fonts directory is under the web directory so if you know the font name, you can download it (not very good)
  * The functionality to reuse a captcha (by saving it in clear in the user session) has been removed from the original library, it could be nice to code it back in and add an option to activate that feature - still, this is a less secure method than making a new captcha everytime.
- * The display of the error messages "refreshing too fast" is not localized and is cut if the catpcha is too small.
 
 ## Troubleshooting
 
@@ -146,20 +185,21 @@ If there is no image or no refresh button, check the following:
     * if you get errors, make sure that:
       * you have executed the `plugin:publish-assets` command (under Windows, you may have to manually copy the sfCryptoCaptchaPlugin/web to the web/ directory)
       * the fonts directory is properly configured (in the `app.yml` file)
-      * the web/sfCryptoCaptchaPlugin/fonts direcotry and sub-directories have the proper permissions
+      * the SF_ROOT/plugins/sfCryptoCaptchaPlugin/fonts directory and sub-directories have the proper permissions
       * all the permissions of the plugin are correct
       * if there is still no image, check that the image is correctly destroyed in the sfCryptoCaptcha class with `imagedestroy($this->image);` line 220
         * same for the noise, if there is no noise, check that the image-brush is destroyed with `$this->clearBrush();` line 198
   * back in your template, make sure that:
     * the final paths are correct (/captcha for the image and /sfCryptoCaptchaPlugin/images/refresh.png for the refresh image)
     * there is no conflict in the url (/captcha not used by some other plugin or module of the same name)
-    * there is no special :format applied in the URL (the helper does not (yet) handle extensions/formats[like .html, .php etc.])
-  * after checking all this, if it still doesn't work, you'll have to check everything directly in the source of the plugin. If you notice a glitch or a bug, please contact-me [henearkrxern [at] hotmail.fr] and I'll update the script. Thanks :)
+  * after checking all this, if it still doesn't work, you'll have to check everything directly in the source of the plugin. If you need help or you notice a glitch or a bug, please contact-me [henearkrxern [at] hotmail.fr] and I'll update the script. Thanks :)
 
 If your captcha does not display correctly:
 
-  * If all the characters are not in the image, play with the character size settings(char_min_size and char_max_size) and the character spacing (char_px_spacing) and/or with the image size.
+  * If all the characters are not in the image (overflow), play with the character size settings(char_min_size and char_max_size) and the character spacing (char_px_spacing) and/or with the image size.
   * Play with some options and see what you come up with, hopefully, you should find where the problem is coming from.
+  * You have enabled the background image but your background is black: check that the path is correct and that it starts with a "/".
+  * If there is an error with the font (usually there will be no image - but in case you run out of problem-ideas, check the path to the font files and that it starts with a "/".
 
 ## Copyright
 
