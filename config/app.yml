@@ -9,7 +9,7 @@ all:
     bg_green:                         255                 #quantity of green color (0->255)
     bg_blue:                          255                 #quantity of blue color (0->255)
     bg_transparent:                   false               #transparent background - only works for PNG images
-    bg_img:                           false               # image or file (randomly choses an image in the file)
+    bg_img:                           ''                  # image or file (randomly choses an image in the file)
     bg_border:                        true                #add a border or not
   #Paths
     img_dir:                          '/sfCryptoCaptchaPlugin/images' #directory of the images in the web directory
