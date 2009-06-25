@@ -566,11 +566,12 @@ class sfCryptoCaptcha
         }
       }
       closedir($pointer);
-      $this->config['bg_img'] = $this->config['bg_img'].'/'.$files[array_rand($files, 1)];
+      $this->captcha['bg_img'] = $this->config['bg_img'].'/'.$files[array_rand($files, 1)];
     }
     elseif($this->config['bg_img'] && file_exists($this->config['bg_img']))
     {
       //use the file specified
+      $this->captcha['bg_img'] = $this->config['bg_img'];
     }
     else
     {
@@ -697,7 +698,7 @@ class sfCryptoCaptcha
    */
   private function addImageBackgroundImage()
   {
-    list($bg_width, $bg_height, $bg_type, $bg_attributes) = getimagesize($this->config['bg_img']);
+    list($bg_width, $bg_height, $bg_type, $bg_attributes) = getimagesize($this->captcha['bg_img']);
     if($bg_type == '1')
     {
       $img_read = imagecreatefromgif($this->config['bg_img']);
@@ -1135,8 +1136,10 @@ class sfCryptoCaptcha
     $this->config['bg_green'] = sfConfig::get('app_sf_crypto_captcha_bg_green', 255); // quantity of green (0->255)
     $this->config['bg_blue'] = sfConfig::get('app_sf_crypto_captcha_bg_blue', 255); // quantity of blue (0->255)
     $this->config['bg_transparent'] = sfConfig::get('app_sf_crypto_captcha_bg_transparent', false); // transparent backround, only for PNG
-    $this->config['bg_img'] = sfConfig::get('app_sf_crypto_captcha_bg_img', false); // image or file where the background is chosen (randomly chosen in the file)
+    $this->config['bg_img'] = sfConfig::get('app_sf_crypto_captcha_bg_img', false); // boolean or image or file path. 
+      //If a file path is specified, an image is randomly chosen in the file
     if($this->config['bg_img'] != false) { $this->config['bg_img'] = $web_dir.$this->config['bg_img']; }
+    
     $this->config['bg_border'] = sfConfig::get('app_sf_crypto_captcha_bg_border', true); //border or not
     
     $this->config['img_dir'] = sfConfig::get('app_sf_crypto_captcha_img_dir', '/sfCryptoCaptchaPlugin/images/'); // directory of images
