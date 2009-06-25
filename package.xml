@@ -11,10 +11,10 @@
   <active>yes</active>
  </lead>
  <date>2009-06-26</date>
- <time>01:29:36</time>
+ <time>01:41:36</time>
  <version>
-  <release>0.0.6</release>
-  <api>0.0.6</api>
+  <release>0.0.7</release>
+  <api>0.0.7</api>
  </version>
  <stability>
   <release>beta</release>
@@ -67,18 +67,18 @@
      <file role="data" name="styrofoam.jpg" />
     </dir>
     <dir name="error">
-     <file role="data" name="refresh.png" />
-     <file role="data" name="too_many.png" />
-     <file role="data" name="unknown.png" />
+     <file role="data" name="refresh.jpg" />
+     <file role="data" name="too_many.jpg" />
+     <file role="data" name="unknown.jpg" />
      <dir name="en">
-      <file role="data" name="refresh.png" />
-      <file role="data" name="too_many.png" />
-      <file role="data" name="unknown.png" />
+      <file role="data" name="refresh.jpg" />
+      <file role="data" name="too_many.jpg" />
+      <file role="data" name="unknown.jpg" />
      </dir>
      <dir name="fr">
-      <file role="data" name="refresh.png" />
-      <file role="data" name="too_many.png" />
-      <file role="data" name="unknown.png" />
+      <file role="data" name="refresh.jpg" />
+      <file role="data" name="too_many.jpg" />
+      <file role="data" name="unknown.jpg" />
      </dir>
     </dir>
    </dir>
@@ -123,6 +123,22 @@
  </dependencies>
  <phprelease />
  <changelog>
+  <release>
+   <version>
+    <release>0.0.7</release>
+    <api>0.0.7</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.symfony-project.com/license">MIT license</license>
+   <license>MIT</license>
+   <date>2009-06-26</date>
+   <notes>
+     * henearkrxern: updated README
+   </notes>
+  </release>
   <release>
    <version>
     <release>0.0.6</release>
