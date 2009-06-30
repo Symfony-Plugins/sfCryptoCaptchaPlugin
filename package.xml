@@ -10,11 +10,11 @@
   <email>henearkrxern@hotmail.fr</email>
   <active>yes</active>
  </lead>
- <date>2009-06-26</date>
- <time>01:41:36</time>
+ <date>2009-06-30</date>
+ <time>13:29:23</time>
  <version>
-  <release>0.0.7</release>
-  <api>0.0.7</api>
+  <release>0.0.8</release>
+  <api>0.0.8</api>
  </version>
  <stability>
   <release>beta</release>
@@ -123,6 +123,24 @@
  </dependencies>
  <phprelease />
  <changelog>
+  
+  <release>
+   <version>
+    <release>0.0.8</release>
+    <api>0.0.8</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.symfony-project.com/license">MIT license</license>
+   <license>MIT</license>
+   <date>2009-06-30</date>
+   <notes>
+     * henearkrxern: updated the validator to public instead of private to allow it's use in the action if needed - thanks to spilo101 for noticing it
+     * henearkrxern: fixed a "bug" in the symfony configuration cascade that was making the plugin behave strangely - thanks to CedCannes for noticing this and other small glitches
+   </notes>
+  </release>
   <release>
    <version>
     <release>0.0.7</release>

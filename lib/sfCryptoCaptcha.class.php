@@ -1038,7 +1038,7 @@ class sfCryptoCaptcha
     
     return true;
   }
-  
+  /*
   private function generateErrorImage($error_text)
   {
     $this->captcha['bg_img'] = false;
@@ -1060,7 +1060,7 @@ class sfCryptoCaptcha
     for($i=1; $i<= $this->captcha['chars']; $i++)
     {
       //font
-      $this->captcha['letters'][$i]['font'] = $this->config['error_font'];
+      $this->captcha['letters'][$i]['font'] = 'arial.ttf'//$this->config['error_font'];
       $this->captcha['letters'][$i]['font_path'] = $this->config['char_fonts_dir'].$this->captcha['letters'][$i]['font'];
       
       //ink color
@@ -1129,6 +1129,7 @@ class sfCryptoCaptcha
     
     return $this->sendImageToBrowser();
   }
+  */
   
   private function sendErrorImage($error_message)
   {
@@ -1216,8 +1217,6 @@ class sfCryptoCaptcha
     $this->config['char_fonts'] = sfConfig::get('app_sf_crypto_captcha_char_fonts', array('luggerbu.ttf')); // the fonts used randomly to generate the characters
     $this->config['char_fonts_dir'] = sfConfig::get('app_sf_crypto_captcha_char_fonts_dir', '/plugins/sfCryptoCaptchaPlugin/media/fonts/'); // directory with the fonts
     $this->config['char_fonts_dir'] = $root_dir.$this->config['char_fonts_dir'];
-    $this->config['error_font'] = sfConfig::get('app_sf_crypto_captcha_error_font', 'arial.ttf');
-    
     
     //Setting authorized characters
     $this->config['chars_used'] = sfConfig::get('app_sf_crypto_captcha_chars_used', 'ABCDEFGHKLMNPRTWXYZ234569'); // characters used for the captchas

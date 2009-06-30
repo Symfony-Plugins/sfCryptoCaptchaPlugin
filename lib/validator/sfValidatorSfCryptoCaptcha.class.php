@@ -12,7 +12,7 @@ class sfValidatorSfCryptoCaptcha extends sfValidatorBase
   /**
    * @see sfValidatorBase
    */
-  protected function configure($options = array(), $messages = array())
+  public function configure($options = array(), $messages = array())
   {
     $this->setOption('trim', true);
     $this->setOption('required', true);

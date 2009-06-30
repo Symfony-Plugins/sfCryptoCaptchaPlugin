@@ -87,10 +87,6 @@ Two helper functions are to be used in your template
 
 The first helper displays the captcha image, the second one is the reload button (if the user can't read the picture and want to use another one).
 
->**Note**
->If there is no image displayed, it may be because you are using a :format in your url (adding .html for example) [see the troubleshooting section below]
-
-
 ## Validation
 
 To validate the entered captcha code in a form, use the sfValidatorSfCryptoCaptcha validator like so:
@@ -157,7 +153,7 @@ The three needed images are:
   * `refresh.xxx`   For too fast refreshes
 
 Each one of there images __must__ be present in each culture folder or in the main error folder.
-By default, a french and english version is provided. You can add as many languages and needed and customize the error images in any graphic editor(Gimp, Photoshop ...) as long as it is in jpeg, png or gif format.
+By default, a french and english version is provided. You can add as many languages and needed and customize the error images in any graphic editor(Gimp, Photoshop ...) as long as it is in jpeg, png or gif format [the same as the captcha `format` option].
 
 ## Dependencies
 
@@ -174,6 +170,7 @@ These are the things that need to be implemented/fixed:
 
  * The pear install seems to malfunction :(
  * The functionality to reuse a captcha (by saving it in clear in the user session) has been removed from the original library, it could be nice to code it back in and add an option to activate that feature - still, this is a less secure method than making a new captcha everytime.
+ * Not tested on 1.1 but it should also work correctly.
 
 ## Troubleshooting
 

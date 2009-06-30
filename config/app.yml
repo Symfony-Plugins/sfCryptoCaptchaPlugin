@@ -24,9 +24,8 @@ all:
     char_max_rot_angle:               30                  # maximum character rotation angle (0->360)
     char_vertical_offset:             true                # add a random vertical offset to letters
   #Fonts
-    char_fonts:                       [luggerbu.ttf,SCRAWL.ttf,Alanden_.ttf] # the randomly used fonts to generate the characters
+    char_fonts:                       [ luggerbu.ttf ] # the randomly used fonts to generate the characters
     char_fonts_dir:                   '/plugins/sfCryptoCaptchaPlugin/media/fonts/' # directory containing the fonts in the symfony root directory
-    error_font:                       'arial.ttf'         # font used for error messages
   #Authorized characters
     chars_used:                       'ABCDEFGHKLMNPRTWXYZ234569'  # characters used for random captchas without "easy" option
   #Easy captchas
