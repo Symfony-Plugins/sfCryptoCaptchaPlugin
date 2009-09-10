@@ -996,6 +996,9 @@ class sfCryptoCaptcha
    */
   private function sendImageToBrowser()
   {
+    //disable cache for captchas
+    header("Cache-Control: no-cache");
+    
     //send the finished image in JPG, GIF or PNG format
     if(strtoupper($this->config['format']) == 'JPG' || strtoupper($this->config['format']) == 'JPEG')
     {

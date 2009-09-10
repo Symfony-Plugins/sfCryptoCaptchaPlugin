@@ -10,11 +10,11 @@
   <email>henearkrxern@hotmail.fr</email>
   <active>yes</active>
  </lead>
- <date>2009-06-30</date>
- <time>13:29:23</time>
+ <date>2009-09-10</date>
+ <time>12:49:23</time>
  <version>
-  <release>0.0.8</release>
-  <api>0.0.8</api>
+  <release>0.0.9</release>
+  <api>0.0.9</api>
  </version>
  <stability>
   <release>beta</release>
@@ -123,7 +123,23 @@
  </dependencies>
  <phprelease />
  <changelog>
-  
+  <release>
+   <version>
+    <release>0.0.9</release>
+    <api>0.0.9</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.symfony-project.com/license">MIT license</license>
+   <license>MIT</license>
+   <date>2009-09-10</date>
+   <notes>
+     * henearkrxern: there was a problem when re-displaying the form after a submit with errors on some browsers cache logic (no automatic image refresh in Konqueror) - thanks to Sotiris
+     * henearkrxern: added the little adaptation to do for sf 1.1 into the README (replace routing class by manually defining routes in the routing.yml file) - thanks to M.Roos
+   </notes>
+  </release>
   <release>
    <version>
     <release>0.0.8</release>

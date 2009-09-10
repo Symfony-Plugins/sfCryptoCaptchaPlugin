@@ -20,7 +20,8 @@ class sfCryptoCaptchaActions extends sfActions
   
     $captcha = new sfCryptoCaptcha();
     $captcha->getCaptchaImage();
-
+    
+    sfConfig::set('sf_web_debug', false);
     return sfView::NONE;
   }
   /**
