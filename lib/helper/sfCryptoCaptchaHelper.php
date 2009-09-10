@@ -2,7 +2,7 @@
 
 function captcha_image()
 {
-  $ret = '<img id="captcha_img" src="'.url_for('sfCryptoCaptcha/captcha?random='.rand(999,9999)).'" alt="Captcha Image">';
+  $ret = '<img id="captcha_img" src="'.url_for('sfCryptoCaptcha/captcha?random='.time()).'" alt="Captcha Image">';
 	return $ret;
 }
 
