@@ -10,11 +10,11 @@
   <email>henearkrxern@hotmail.fr</email>
   <active>yes</active>
  </lead>
- <date>2009-09-10</date>
- <time>12:49:23</time>
+ <date>2009-09-16</date>
+ <time>14:08:07</time>
  <version>
-  <release>0.0.9</release>
-  <api>0.0.9</api>
+  <release>0.1.0</release>
+  <api>0.1.0</api>
  </version>
  <stability>
   <release>beta</release>
@@ -123,6 +123,23 @@
  </dependencies>
  <phprelease />
  <changelog>
+  <release>
+   <version>
+    <release>0.1.0</release>
+    <api>0.1.0</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>beta</api>
+   </stability>
+   <license uri="http://www.symfony-project.com/license">MIT license</license>
+   <license>MIT</license>
+   <date>2009-09-16</date>
+   <notes>
+     * henearkrxern: there was a fonts folder that was in the web/ dir - fixed. Thanks to: Maik
+   </notes>
+  </release> 
+ 
   <release>
    <version>
     <release>0.0.9</release>
