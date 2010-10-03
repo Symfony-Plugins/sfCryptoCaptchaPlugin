@@ -15,19 +15,15 @@ The plugin is easy to install, by using SVN or PEAR:
 
 ### Install using PEAR
 
-    $ symfony plugin:install sfCryptoCaptchaPlugin
+    $ symfony plugin:install -s beta sfCryptoCaptchaPlugin
 
 If this doesn't work, try the help option for plugin installation
 
     $ symfony help plugin:install
 
-
 ### Install using SVN
 
-    $ mkdir plugins/sfCryptoCaptchaPlugin
-    $ cd plugins/sfCryptoCaptchaPlugin
-    plugins/sfCryptoCaptchaPlugin$ svn co http://svn.symfony-project.com/plugins/sfCryptoCaptchaPlugin/trunk .
-    $ cd ../..
+    $ svn co http://svn.symfony-project.com/plugins/sfCryptoCaptchaPlugin/trunk plugins/sfCryptoCaptchaPlugin
 
 Activate the plugin in you applications `settings.yml` file:
 
